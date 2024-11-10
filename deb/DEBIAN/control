@@ -1,0 +1,5 @@
+Package: program
+Version: 1.0
+Architecture: arm64
+Maintainer: daryna.nahaivska2017@gmail.com
+Description: A tool for calculating exponential functions and other operations with Euler's number (e)
