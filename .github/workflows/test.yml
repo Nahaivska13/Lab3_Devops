@@ -25,5 +25,7 @@ jobs:
           make
 
       - name: Run test
-        run: ./test/main_test
+        run: |
+          cd build
+          ./test_program
 
