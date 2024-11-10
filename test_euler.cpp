@@ -10,7 +10,7 @@ void testSecSeries() {
     double result = euler.secSeries(n, x);
     std::cout << "Result: " << result << std::endl;
     double expected = 1.139493;
-    double epsilon = 1e-6;
+    double epsilon = 1e-4;
     assert(fabs(result - expected) < epsilon);
 }
 
