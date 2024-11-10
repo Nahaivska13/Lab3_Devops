@@ -1,0 +1,3 @@
+/home/ubuntu/Lab3_Devops/build/CMakeFiles/test_program.dir
+/home/ubuntu/Lab3_Devops/build/CMakeFiles/edit_cache.dir
+/home/ubuntu/Lab3_Devops/build/CMakeFiles/rebuild_cache.dir

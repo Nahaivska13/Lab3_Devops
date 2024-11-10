@@ -4,33 +4,11 @@ PACKAGE_BUGREPORT = daryna.nahaivska2017@gmail.com
 
 AUTOMAKE_OPTIONS = foreign subdir-objects
 
+TESTS = test_euler.cpp
 bin_PROGRAMS = program
-program_SOURCES = main.cpp euler.cpp
+your_program_name_SOURCES = main.cpp euler.cpp
 
-bin_PROGRAMS += test
-test_SOURCES = test/main_test.cpp euler.cpp
+check_PROGRAMS = test_program
 
-CTRLF_DIR = $(CURDIR)/deb/DEBIAN
-CTRLF_NAME = $(CTRLF_DIR)/control
+test_program_SOURCES = test_euler.cpp euler.cpp
 
-uninstall-hook:
-	rm -d $(datarootdir)/$(PACKAGE)/data
-	rm -d $(datarootdir)/$(PACKAGE)
-
-.PHONY: deb debug
-
-debug:
-	@echo "Package: $(PACKAGE)"
-	@echo "Version: $(VERSION)"
-	@echo "Bug Report: $(PACKAGE_BUGREPORT)"
-	@echo "Source Files: $(program_SOURCES)"
-
-deb:
-	mkdir -p $(CTRLF_DIR)
-	echo Package: $(PACKAGE) > $(CTRLF_NAME)
-	echo Version: $(VERSION) >> $(CTRLF_NAME)
-	echo Architecture: all >> $(CTRLF_NAME)
-	echo Maintainer: $(PACKAGE_BUGREPORT) >> $(CTRLF_NAME)
-	echo -n "Description: " >> $(CTRLF_NAME)
-	echo "calculation software" >> $(CTRLF_NAME)
-	make DESTDIR=$(CURDIR)/deb install
