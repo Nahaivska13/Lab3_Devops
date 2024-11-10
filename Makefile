@@ -86,7 +86,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = program$(EXEEXT)
+bin_PROGRAMS = program$(EXEEXT) test$(EXEEXT)
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -104,6 +104,10 @@ PROGRAMS = $(bin_PROGRAMS)
 am_program_OBJECTS = main.$(OBJEXT) euler.$(OBJEXT)
 program_OBJECTS = $(am_program_OBJECTS)
 program_LDADD = $(LDADD)
+am__dirstamp = $(am__leading_dot)dirstamp
+am_test_OBJECTS = test/main_test.$(OBJEXT) euler.$(OBJEXT)
+test_OBJECTS = $(am_test_OBJECTS)
+test_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -119,7 +123,8 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/euler.Po ./$(DEPDIR)/main.Po
+am__depfiles_remade = ./$(DEPDIR)/euler.Po ./$(DEPDIR)/main.Po \
+	test/$(DEPDIR)/main_test.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -134,8 +139,8 @@ AM_V_CXXLD = $(am__v_CXXLD_$(V))
 am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(program_SOURCES)
-DIST_SOURCES = $(program_SOURCES)
+SOURCES = $(program_SOURCES) $(test_SOURCES)
+DIST_SOURCES = $(program_SOURCES) $(test_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -159,7 +164,8 @@ am__define_uniq_tagged_files = \
     if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
   done | $(am__uniquify_input)`
 AM_RECURSIVE_TARGETS = cscope
-am__DIST_COMMON = $(srcdir)/Makefile.in depcomp install-sh missing
+am__DIST_COMMON = $(srcdir)/Makefile.in compile depcomp install-sh \
+	missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -186,6 +192,9 @@ AUTOCONF = ${SHELL} '/home/ubuntu/Lab3_Devops/missing' autoconf
 AUTOHEADER = ${SHELL} '/home/ubuntu/Lab3_Devops/missing' autoheader
 AUTOMAKE = ${SHELL} '/home/ubuntu/Lab3_Devops/missing' automake-1.16
 AWK = gawk
+CC = gcc
+CCDEPMODE = depmode=gcc3
+CFLAGS = -g -O2
 CPPFLAGS = 
 CSCOPE = cscope
 CTAGS = ctags
@@ -193,13 +202,15 @@ CXX = g++
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS = -g -O2
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"program\" -DPACKAGE_TARNAME=\"program\" -DPACKAGE_VERSION=\"1.0\" -DPACKAGE_STRING=\"program\ 1.0\" -DPACKAGE_BUGREPORT=\"daryna.nahaivska2017@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"program\" -DVERSION=\"1.0\"
+DEFS = -DPACKAGE_NAME=\"program\" -DPACKAGE_TARNAME=\"program\" -DPACKAGE_VERSION=\"1.0\" -DPACKAGE_STRING=\"program\ 1.0\" -DPACKAGE_BUGREPORT=\"daryna.nahaivska2017@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"program\" -DVERSION=\"1.0\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1
 DEPDIR = .deps
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
 ETAGS = etags
 EXEEXT = 
+GTEST_CFLAGS = -DGTEST_HAS_PTHREAD=1
+GTEST_LIBS = -lgtest
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
@@ -220,6 +231,11 @@ PACKAGE_TARNAME = program
 PACKAGE_URL = 
 PACKAGE_VERSION = 1.0
 PATH_SEPARATOR = :
+PKG_CONFIG = /usr/bin/pkg-config
+PKG_CONFIG_LIBDIR = 
+PKG_CONFIG_PATH = 
+PROGRAM_CFLAGS = -I/usr/include/glib-2.0 -I/usr/lib/aarch64-linux-gnu/glib-2.0/include
+PROGRAM_LIBS = -lglib-2.0
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = 
@@ -228,6 +244,7 @@ abs_builddir = /home/ubuntu/Lab3_Devops
 abs_srcdir = /home/ubuntu/Lab3_Devops
 abs_top_builddir = /home/ubuntu/Lab3_Devops
 abs_top_srcdir = /home/ubuntu/Lab3_Devops
+ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
 am__leading_dot = .
@@ -267,8 +284,11 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-AUTOMAKE_OPTIONS = foreign
+AUTOMAKE_OPTIONS = foreign subdir-objects
 program_SOURCES = main.cpp euler.cpp
+test_SOURCES = test/main_test.cpp euler.cpp
+CTRLF_DIR = $(CURDIR)/deb/DEBIAN
+CTRLF_NAME = $(CTRLF_DIR)/control
 all: all-am
 
 .SUFFIXES:
@@ -352,15 +372,29 @@ clean-binPROGRAMS:
 program$(EXEEXT): $(program_OBJECTS) $(program_DEPENDENCIES) $(EXTRA_program_DEPENDENCIES) 
 	@rm -f program$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(program_OBJECTS) $(program_LDADD) $(LIBS)
+test/$(am__dirstamp):
+	@$(MKDIR_P) test
+	@: > test/$(am__dirstamp)
+test/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) test/$(DEPDIR)
+	@: > test/$(DEPDIR)/$(am__dirstamp)
+test/main_test.$(OBJEXT): test/$(am__dirstamp) \
+	test/$(DEPDIR)/$(am__dirstamp)
+
+test$(EXEEXT): $(test_OBJECTS) $(test_DEPENDENCIES) $(EXTRA_test_DEPENDENCIES) 
+	@rm -f test$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_OBJECTS) $(test_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f test/*.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/euler.Po # am--include-marker
 include ./$(DEPDIR)/main.Po # am--include-marker
+include test/$(DEPDIR)/main_test.Po # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -369,15 +403,17 @@ $(am__depfiles_remade):
 am--depfiles: $(am__depfiles_remade)
 
 .cpp.o:
-	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
+	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+	$(am__mv) $$depbase.Tpo $$depbase.Po
 #	$(AM_V_CXX)source='$<' object='$@' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(AM_V_CXX_no)$(CXXCOMPILE) -c -o $@ $<
 
 .cpp.obj:
-	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
+	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
+	$(am__mv) $$depbase.Tpo $$depbase.Po
 #	$(AM_V_CXX)source='$<' object='$@' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(AM_V_CXX_no)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
@@ -645,6 +681,8 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-rm -f test/$(DEPDIR)/$(am__dirstamp)
+	-rm -f test/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -657,6 +695,7 @@ distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 		-rm -f ./$(DEPDIR)/euler.Po
 	-rm -f ./$(DEPDIR)/main.Po
+	-rm -f test/$(DEPDIR)/main_test.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -706,6 +745,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -rf $(top_srcdir)/autom4te.cache
 		-rm -f ./$(DEPDIR)/euler.Po
 	-rm -f ./$(DEPDIR)/main.Po
+	-rm -f test/$(DEPDIR)/main_test.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -722,8 +762,9 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-binPROGRAMS
-
-.MAKE: install-am install-strip
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
+.MAKE: install-am install-strip uninstall-am
 
 .PHONY: CTAGS GTAGS TAGS all all-am am--depfiles am--refresh check \
 	check-am clean clean-binPROGRAMS clean-cscope clean-generic \
@@ -740,10 +781,32 @@ uninstall-am: uninstall-binPROGRAMS
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-binPROGRAMS
+	uninstall-am uninstall-binPROGRAMS uninstall-hook
 
 .PRECIOUS: Makefile
 
+
+uninstall-hook:
+	rm -d $(datarootdir)/$(PACKAGE)/data
+	rm -d $(datarootdir)/$(PACKAGE)
+
+.PHONY: deb debug
+
+debug:
+	@echo "Package: $(PACKAGE)"
+	@echo "Version: $(VERSION)"
+	@echo "Bug Report: $(PACKAGE_BUGREPORT)"
+	@echo "Source Files: $(program_SOURCES)"
+
+deb:
+	mkdir -p $(CTRLF_DIR)
+	echo Package: $(PACKAGE) > $(CTRLF_NAME)
+	echo Version: $(VERSION) >> $(CTRLF_NAME)
+	echo Architecture: all >> $(CTRLF_NAME)
+	echo Maintainer: $(PACKAGE_BUGREPORT) >> $(CTRLF_NAME)
+	echo -n "Description: " >> $(CTRLF_NAME)
+	echo "calculation software" >> $(CTRLF_NAME)
+	make DESTDIR=$(CURDIR)/deb install
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
