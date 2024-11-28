@@ -4,6 +4,6 @@ RUN apt-get update && apt-get install -y \
     libc6-dev \
     libstdc++6
 WORKDIR /home/app
-COPY COPY program .
+COPY ./program . 
 RUN chmod +x ./program
 ENTRYPOINT ["./program"]
