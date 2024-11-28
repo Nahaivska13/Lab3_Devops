@@ -4,6 +4,6 @@ RUN apt-get update && apt-get install -y \
     libc6-dev \
     libstdc++6
 WORKDIR /home/app
-COPY /home/ubuntu/Lab3_Devops/program .
+COPY COPY program .
 RUN chmod +x ./program
 ENTRYPOINT ["./program"]
