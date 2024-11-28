@@ -1,5 +1,5 @@
-#include "HTTP_Server.h"
-#include "euler.h"  
+#include "HTTP_server.h"
+#include "euler.h"  // Підключаємо euler.h для використання класу Euler
 #include <stdio.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -105,44 +105,47 @@ void handleClient(int clientSocket) {
 }
 
 void handleCompute(int clientSocket) {
+    // Створюємо об'єкт класу Euler
+    Euler euler;
+
     // Start timing
     auto start = std::chrono::high_resolution_clock::now();
 
-    // Simplify the computation for debugging
+    // Виконуємо обчислення
     std::vector<double> values(100000);
-    Suite suite;
-    for (size_t i = 0; i < values.size(); ++i)
-        values[i] = suite.FuncA(5, i % 20 + 0.1); // Just a simple calculation
+    for (size_t i = 0; i < values.size(); ++i) {
+        values[i] = euler.secSeries(5, i % 20 + 0.1); // Викликаємо метод для обчислення ряду sec(x)
+    }
 
-    // Perform sorting on the array
-    for (int i = 0; i < 500; ++i)  // Reduce the number of sorts for testing
-        std::sort(values.begin(), values.end()); // Sort less for testing
+    for (int i = 0; i < 500; ++i) {  // Зменшили кількість сортувань для тестування
+        std::sort(values.begin(), values.end()); // Сортуємо масив
+    }
 
     auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
                        std::chrono::high_resolution_clock::now() - start)
-                       .count(); // Calculate elapsed time
+                       .count(); // Обчислюємо час
 
-    // Formulate the response body
+    // Формуємо тіло відповіді
     char body[50];
     sprintf(body, "Elapsed time: %ld ms", elapsed);
 
-    // Send the response back to the client
+    // Відправляємо відповідь клієнту
     sendResponse(clientSocket, HTTP_200HEADER, body);
 }
 
 void sendResponse(int clientSocket, const char* header, const char* body) {
     char response[500];
 
-    // Calculate content length (length of body)
+    // Обчислюємо довжину вмісту (довжина тіла)
     int contentLength = strlen(body);
     
-    // Ensure the response header is properly formatted
+    // Форматуємо заголовок відповіді
     sprintf(response, "%sContent-Length: %d\r\n\r\n%s", header, contentLength, body);
     
-    // Log the entire response before sending
+    // Логуємо всю відповідь перед відправкою
     printf("Sending response:\n%s\n", response);
     
-    // Send the response to the client using send()
+    // Відправляємо відповідь через send()
     ssize_t bytesSent = send(clientSocket, response, strlen(response), 0);
 
     if (bytesSent == -1) {
@@ -151,3 +154,4 @@ void sendResponse(int clientSocket, const char* header, const char* body) {
         printf("Response sent successfully, %ld bytes\n", bytesSent);
     }
 }
+
