@@ -1,0 +1,16 @@
+/home/ubuntu/Lab3_Devops/glibc-2.34/build/resolv/compat-gethnamaddr.o: \
+ compat-gethnamaddr.c ../include/stdc-predef.h \
+ /home/ubuntu/Lab3_Devops/glibc-2.34/build/libc-modules.h \
+ ../include/libc-symbols.h \
+ /home/ubuntu/Lab3_Devops/glibc-2.34/build/config.h \
+ ../sysdeps/generic/libc-symver.h ../sysdeps/generic/symbol-hacks.h \
+ ../include/shlib-compat.h \
+ /home/ubuntu/Lab3_Devops/glibc-2.34/build/abi-versions.h
+../include/stdc-predef.h:
+/home/ubuntu/Lab3_Devops/glibc-2.34/build/libc-modules.h:
+../include/libc-symbols.h:
+/home/ubuntu/Lab3_Devops/glibc-2.34/build/config.h:
+../sysdeps/generic/libc-symver.h:
+../sysdeps/generic/symbol-hacks.h:
+../include/shlib-compat.h:
+/home/ubuntu/Lab3_Devops/glibc-2.34/build/abi-versions.h:

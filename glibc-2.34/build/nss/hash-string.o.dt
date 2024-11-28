@@ -1,0 +1,14 @@
+/home/ubuntu/Lab3_Devops/glibc-2.34/build/nss/hash-string.o: \
+ ../intl/hash-string.c ../include/stdc-predef.h \
+ /home/ubuntu/Lab3_Devops/glibc-2.34/build/libc-modules.h \
+ ../include/libc-symbols.h \
+ /home/ubuntu/Lab3_Devops/glibc-2.34/build/config.h \
+ ../sysdeps/generic/libc-symver.h ../sysdeps/generic/symbol-hacks.h \
+ ../intl/hash-string.h
+../include/stdc-predef.h:
+/home/ubuntu/Lab3_Devops/glibc-2.34/build/libc-modules.h:
+../include/libc-symbols.h:
+/home/ubuntu/Lab3_Devops/glibc-2.34/build/config.h:
+../sysdeps/generic/libc-symver.h:
+../sysdeps/generic/symbol-hacks.h:
+../intl/hash-string.h:
