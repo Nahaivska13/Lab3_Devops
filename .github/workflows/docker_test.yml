@@ -40,4 +40,4 @@ jobs:
         run: |
           docker run -d --name my_running_server -p 8080:8080 dnahaivska13/darynanahaivska:latest
           docker ps
-          curl http://localhost:8081/compute
+          curl http://localhost:8080/compute
