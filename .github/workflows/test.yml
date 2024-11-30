@@ -25,6 +25,6 @@ jobs:
           cmake .              
           make               
 
-  - name: Compile test_euler.cpp
+      - name: Compile test_euler.cpp
         run: |
           g++ -o build/test_server test_euler.cpp
