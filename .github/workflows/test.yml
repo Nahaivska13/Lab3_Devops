@@ -27,3 +27,4 @@ jobs:
      - name: Compile test_euler.cpp
         run: |
           g++ -o build/test_program test_euler.cpp euler.cpp
+          
