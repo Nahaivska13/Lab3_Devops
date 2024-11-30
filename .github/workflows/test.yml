@@ -26,8 +26,8 @@ jobs:
 
       - name: Compile test_euler.cpp
         run: |
-          g++ -o build/server test_euler.cpp
+          g++ -o build/test_program test_euler.cpp
 
       - name: Run compiled server
         run: |
-          ./build/server
+          ./build/test_program
