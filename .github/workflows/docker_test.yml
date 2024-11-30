@@ -18,13 +18,13 @@ jobs:
 
       - name: Build Docker image
         run: |
-          echo "FROM ubuntu: 22.04" > Dockerfile
+          echo "FROM ubuntu:22.04" > Dockerfile
           echo "MAINTAINER daryna.nahaivska2017@gmail.com" >> Dockerfile
           echo "WORKDIR /home/app" >> Dockerfile
-          echo "COPY ./program ." >> Dockerfile
+          echo "COPY ./server ." >> Dockerfile
           echo "RUN apt-get update && apt-get install -y libc6 libstdc++6" >> Dockerfile
-          echo "RUN chmod +x ./program" >> Dockerfile
-          echo "ENTRYPOINT [\"./program\"]" >> Dockerfile
+          echo "RUN chmod +x ./server" >> Dockerfile
+          echo "ENTRYPOINT [\"./server\"]" >> Dockerfile
           docker build -t dnahaivska13/darynanahaivska:latest .
 
       - name: Log in to DockerHub
