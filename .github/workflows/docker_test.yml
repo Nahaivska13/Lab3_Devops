@@ -38,6 +38,6 @@ jobs:
 
       - name: Run Docker container
         run: |
-          docker run -d --name my_running_server -p 8081:8081 dnahaivska13/darynanahaivska:latest
+          docker run -d --name my_running_server -p 8080:8081 dnahaivska13/darynanahaivska:latest
           docker ps
           curl http://localhost:8081/compute
