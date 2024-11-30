@@ -28,8 +28,13 @@ double Euler::factorial(int k) {
 double Euler::eulerNumber(int n) {
     // Визначені значення чисел Ейлера E_2n для перших кількох значень
     static const double eulerNumbers[] = {
-        1, -1, 5, -61, 1385, -50521 // E_0, E_2, E_4, E_6, E_8, E_10
+         1, -1, 5, -61, 1385, -50521, 2702765, -182291365, 190569291, -2386626579 // Розширений масив
     };
+
+ if (n % 2 != 0) {
+        std::cerr << "Euler numbers are only defined for even n values!" << std::endl;
+        return 0;
+    }
 
     int index = n / 2;
     if (index < 6 && n % 2 == 0) {
@@ -39,5 +44,3 @@ double Euler::eulerNumber(int n) {
         return 0;
     }
 }
-
-
