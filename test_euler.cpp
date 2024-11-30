@@ -1,4 +1,3 @@
-
 #include <cassert>
 #include <cmath>
 #include <iostream>
@@ -8,7 +7,6 @@
 void testSecSeries() {
     Euler euler;
 
-    // Параметри тесту
     int n = 3000; // Велика кількість ітерацій
     double x = 112; // Значення x для обчислення sec(x)
 
