@@ -1,0 +1,43 @@
+name: Test Docker
+
+on:
+  push:
+    branches: [ "branchHTTPserver" ]
+  pull_request:
+    branches: [ "branchHTTPserver" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image
+        run: |
+          echo "FROM ubuntu: 22.04" > Dockerfile
+          echo "MAINTAINER daryna.nahaivska2017@gmail.com" >> Dockerfile
+          echo "WORKDIR /home/app" >> Dockerfile
+          echo "COPY ./program ." >> Dockerfile
+          echo "RUN apt-get update && apt-get install -y libc6 libstdc++6" >> Dockerfile
+          echo "RUN chmod +x ./program" >> Dockerfile
+          echo "ENTRYPOINT [\"./program\"]" >> Dockerfile
+          docker build -t dnahaivska13/darynanahaivska:latest .
+
+      - name: Log in to DockerHub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
+
+      - name: Push Docker image
+        run: docker push dnahaivska13/darynanahaivska:latest
+
+      - name: Run Docker container
+        run: |
+          docker run -d --name my_running_server -p 8081:8081 dnahaivska13/darynanahaivska:latest
+          docker ps
+          curl http://localhost:8081/compute
