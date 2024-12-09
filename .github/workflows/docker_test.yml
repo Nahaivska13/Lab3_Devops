@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -33,4 +33,4 @@ jobs:
         run: |
           docker run -d --name my_running_server -p 8081:8081 dnahaivska13/darynanahaivska:latest
           docker ps
-      
+
