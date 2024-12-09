@@ -2,9 +2,9 @@ name: Test Docker
 
 on:
   push:
-    branches: [ "branchHTTPserver" ]
+    branches: [ "branchHTTPserverMulti" ]
   pull_request:
-    branches: [ "branchHTTPserver" ]
+    branches: [ "branchHTTPserverMulti" ]
 
 jobs:
   build:
