@@ -51,7 +51,7 @@ monitor_containers() {
                 last_active["$container"]=$(date +%s)
             fi
 
-            # Переключення на наступний контейнер
+            # Перевірка та запуск наступного контейнера, якщо попередній перевантажений
             if (( i < ${#containers[@]} - 1 )); then
                 next_container="${containers[$((i + 1))]}"
                 if (( $(echo "$cpu_usage > $cpu_limit" | bc -l) )); then
@@ -74,6 +74,7 @@ upgrade_containers() {
         for container in "${containers[@]}"; do
             if docker ps --format "{{.Names}}" | grep -q "^$container$"; then
                 temp_container="${container}_temp"
+                # Оновлення контейнера
                 launch_container "$temp_container" "$(assign_cpu_core "$container")"
                 docker stop "$container" && docker rm "$container"
                 docker rename "$temp_container" "$container"
@@ -88,8 +89,13 @@ upgrade_containers() {
 # Головний цикл
 manage_containers() {
     while true; do
+        # Перевірка завантаження контейнерів і управління
         monitor_containers
+
+        # Перевірка та оновлення контейнерів
         upgrade_containers
+
+        # Очікування перед наступною перевіркою
         sleep 120
     done
 }
