@@ -2,8 +2,11 @@
 
 # Функція для перевірки завантаження CPU конкретного контейнера
 get_cpu_usage() {
-    usage=$(docker stats --no-stream --format "{{.Name}} {{.CPUPerc}}" | grep "$1" | awk '{print $2}' | sed 's/%//')
-    echo "${usage:-0}" # Повернути 0, якщо значення пусте
+    usage=$(docker stats --no-stream --format "{{.Name}} {{.CPUPerc}}" | grep "$1" | awk '{print $2}' | sed 's/%//' | tr -d '\r')
+    if [ -z "$usage" ]; then
+        usage=0
+    fi
+    echo "$usage"
 }
 
 # Функція для запуску контейнера на заданому процесорному ядрі
