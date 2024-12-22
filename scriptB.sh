@@ -1,6 +1,6 @@
 #!/bin/bash
 
-URL="http://<nginx-ip>/compute"
+URL="http://127.0.0.1/compute"
 
 # Функція для відправки HTTP-запиту
 send_request() {
